@@ -14,4 +14,9 @@ def clean_cohort_data(df):
     df['cohort_id'].fillna(df['cohort_name'].map(dictionary), inplace=True)
     df = df.astype({"cohort_id": int})
     df['count_helper'] = 1
+    df['split_path'] = df['path'].str.split('/')
+    return df
+
+def remove_empty_paths(df):
+    df = df[df.path != '/']
     return df

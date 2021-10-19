@@ -13,7 +13,8 @@ def create_cohort_data():
     query = '''
 SELECT *
 FROM logs
-JOIN cohorts on cohorts.id = logs.user_id;
+LEFT JOIN cohorts on cohorts.id = logs.user_id
+WHERE cohort_id IS NOT NULL;
     '''
     df = pd.read_sql(query, get_connection("curriculum_logs"))
     return df
@@ -28,4 +29,14 @@ def get_cohort_data():
     else:
         df = create_cohort_data()
         df.to_csv("cohort.csv")
+    return df
+
+def get_cohort_information_data():
+    '''
+    gets our cohort csv and reads it into a pandas dataframe
+    '''
+    if os.path.isfile("cohorts_information - cohorts.csv"):
+        df = pd.read_csv("cohorts_information - cohorts.csv",index_col = 0)
+    else:
+        print('get csv from the google classroom')
     return df
