@@ -16,4 +16,6 @@ def wrangle_cohort_data():
     # Joining the dataframes
     df = df.join(info_df,on = 'cohort_id',how = 'outer',lsuffix = 'str')
     df = prepare.clean_cohort_data(df)
-    return df
+    df_without_staff = df[df.cohort_id != 28]
+
+    return df, df_without_staff
