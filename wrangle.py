@@ -17,5 +17,6 @@ def wrangle_cohort_data():
     df = df.join(info_df,on = 'cohort_id',how = 'outer',lsuffix = 'str')
     df = prepare.clean_cohort_data(df)
     df_without_staff = df[df.cohort_id != 28]
+    df['module/lesson'] = df.path.str.split('/').str[0] + '/' + df.path.str.split('/').str[1]
 
     return df, df_without_staff
